@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div>
+    <h1>Search for your next adventure!</h1>
+    <form id="js-form">
+        <label for="search-state">State:</label>
+        <input type="text" name="search-state" id="js-search-state" required>
+
+        <label for="max-results">Max Results</label>
+        <input type="number" name="max-results" id="js-max-results" value="10">
+
+        <input type="submit" value="Let's Go!">
+
+        <p id="js-error-message" class="error-message"></p>
+        <section id="results" class="hidden">
+            <h2>Search Results:</h2>
+            <ul id="results-list">
+            </ul>
+        </section>
+
+    </div>
+    </form>
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>
