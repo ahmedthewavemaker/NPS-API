@@ -12,18 +12,24 @@ const baseUrl = "https://developer.nps.gov/api/v1/parks"
 
 function formatQueryString(params) {
     const queryItems = Object.keys(params)
-        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+        .map(key => {
+            if (key === "stateCode") {
+                return `${encodeURIComponent(key)}=${params[key]}`
+            } else {
+                return `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
+            }
+        });
     return queryItems.join('&');
 }
 
 function displayResults(responseJson, maxResults) {
-
+    console.log(responseJson);
     $('#results-list').empty();
 
     for (let i = 0; i < responseJson.data.length & i < maxResults; i++) {
-        $('#results-list').append(`<li><h3><a href="${responseJson.data[i].url}></a></h3>
-        <p>${responseJson.data[i].fullName}</p>
-        <p>${responseJson.data[i].description}</p></li>`)
+        $('#results-list').append(`<li><h3><a href="${responseJson.data[i].url}">${responseJson.data[i].fullName}</a></h3>
+        <p>${responseJson.data[i].description}</p>
+        <p><a href="${responseJson.data[i].directionsUrl}">Get your directions here!</a></p></li>`)
     }
     $('#results').removeClass('hidden');
 }
@@ -49,11 +55,13 @@ function getParks(query, maxResults = 10) {
     };
 
     fetch(url, options)
-        .then(response => response.json)
+        .then(response => response.json())
         .then(responseJson => displayResults(responseJson, maxResults))
-        .catch(console.error('Something went wrong!'))
-        }
-
+        .catch(error => {
+            console.error('Something went wrong!');
+            console.error(error)
+        });
+}
 
 
 
@@ -72,4 +80,4 @@ function watchForm() {
 
 }
 
-$(watchForm);
+$(watchForm)
